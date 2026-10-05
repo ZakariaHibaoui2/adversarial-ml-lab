@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adversarial-ml-lab"
+version = "1.0.0"
+description = "Adversarial machine learning lab in pure NumPy: gradient-checked models, FGSM and PGD attacks, adversarial training and feature-squeezing detection, with robustness curves."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Zakaria Hibaoui" }]
+dependencies = [
+    "numpy>=1.24",
+    "scikit-learn>=1.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5", "httpx>=0.27"]
+
+[project.scripts]
+advlab = "advlab.cli:entrypoint"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"advlab" = ["data/*", "rules/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 125
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["B008", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
